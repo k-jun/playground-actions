@@ -1,0 +1,31 @@
+name: "Playground Redis Cluster"
+
+on:
+  workflow_dispatch:
+jobs:
+  redis-cluster:
+    name: deploy to staging
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: public.ecr.aws/docker/library/redis:7.0
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    steps:
+      - name: Setup Go Environment
+        uses: actions/setup-go@v5.2.0
+        with:
+          go-version-file: ./go.mod
+      - name: Run Go Script
+        shell: bash
+        run: go run main.go
+
+
+    
+    
+    
