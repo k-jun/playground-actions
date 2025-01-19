@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
 jobs:
   redis-cluster:
-    name: deploy to staging
     runs-on: ubuntu-latest
     services:
       redis:
@@ -17,6 +16,10 @@ jobs:
         ports:
           - 6379:6379
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Setup Go Environment
         uses: actions/setup-go@v5.2.0
         with:
